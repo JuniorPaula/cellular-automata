@@ -3,7 +3,7 @@ const BOARD_ROWS = 32
 const BOARD_COLS = BOARD_ROWS
 
 type State = number
-type Board =State[][]
+type Board = State[][]
 
 function createBoard(): Board {
     const board: Board = []
@@ -27,11 +27,17 @@ if (ctx === null) {
     throw new Error(`Could not initialize 2d context`)
 }
 
+const nextId = "next"
+const next = document.getElementById(nextId) as HTMLButtonElement
+if (next == null) {
+    throw new Error(`Could not found button ${nextId}`)
+}
+
 const CELL_WIDTH = app.width/BOARD_COLS
 const CELL_HEIGHT = app.height/BOARD_ROWS
 
-const current_board: Board = createBoard()
-const next_board: Board = createBoard()
+let currentBoard: Board = createBoard()
+let nextBoard: Board = createBoard()
 
 function countNbors(board: Board, nbors: number[], r0: number, c0: number) {
     nbors.fill(0)
@@ -96,11 +102,19 @@ function render (ctx: CanvasRenderingContext2D, board: Board) {
 app.addEventListener("click", (e) => {
     const col = Math.floor(e.offsetX/CELL_WIDTH)
     const row = Math.floor(e.offsetY/CELL_HEIGHT)
-    current_board[row][col] = 1
-    render(ctx, current_board)
+    currentBoard[row][col] = 1
+    render(ctx, currentBoard)
 })
 
-render(ctx, current_board)
+next.addEventListener("click", () => {
+    computerNextBoardGoL(2, currentBoard, nextBoard)
+    const temp = currentBoard
+    currentBoard = nextBoard
+    nextBoard = temp
+    render(ctx, currentBoard)
+})
+
+render(ctx, currentBoard)
 
 
 

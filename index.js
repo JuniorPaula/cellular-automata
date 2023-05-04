@@ -20,10 +20,15 @@ const ctx = app.getContext("2d");
 if (ctx === null) {
     throw new Error(`Could not initialize 2d context`);
 }
+const nextId = "next";
+const next = document.getElementById(nextId);
+if (next == null) {
+    throw new Error(`Could not found button ${nextId}`);
+}
 const CELL_WIDTH = app.width / BOARD_COLS;
 const CELL_HEIGHT = app.height / BOARD_ROWS;
-const current_board = createBoard();
-const next_board = createBoard();
+let currentBoard = createBoard();
+let nextBoard = createBoard();
 function countNbors(board, nbors, r0, c0) {
     nbors.fill(0);
     for (let dr = -1; dr <= 1; ++dr) {
@@ -84,7 +89,14 @@ function render(ctx, board) {
 app.addEventListener("click", (e) => {
     const col = Math.floor(e.offsetX / CELL_WIDTH);
     const row = Math.floor(e.offsetY / CELL_HEIGHT);
-    current_board[row][col] = 1;
-    render(ctx, current_board);
+    currentBoard[row][col] = 1;
+    render(ctx, currentBoard);
 });
-render(ctx, current_board);
+next.addEventListener("click", () => {
+    computerNextBoardGoL(2, currentBoard, nextBoard);
+    const temp = currentBoard;
+    currentBoard = nextBoard;
+    nextBoard = temp;
+    render(ctx, currentBoard);
+});
+render(ctx, currentBoard);
