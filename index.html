@@ -8,19 +8,21 @@
     <title>Cellular Automata</title>
 </head>
 <body>
-    <h1>Cellular Automata</h1>
-    <p><button id="next">Next</button></p>
-    <fieldset style="width: 120px; margin-bottom: 10px;">
-        <legend>State:</legend>
-        <div>
-            <input type="radio" name="state" id="dead" value="dead" />
-            <label for="dead">Dead</label>
-        </div>
-        <div>
-            <input type="radio" name="state" id="alive" value="alive" checked />
-            <label for="alive">Alive</label>
-        </div>
-    </fieldset>
+    <div class="container">
+        <h1>Cellular Automata</h1>
+        <p><button id="next">Next</button></p>
+        <fieldset style="width: 120px; margin-bottom: 10px;">
+            <legend>State:</legend>
+            <div>
+                <input type="radio" name="state" id="dead" value="dead" />
+                <label for="dead">Dead</label>
+            </div>
+            <div>
+                <input type="radio" name="state" id="alive" value="alive" checked />
+                <label for="alive">Alive</label>
+            </div>
+        </fieldset>
+    </div>
     <canvas id="app"></canvas>
     <script src="index.js"></script>    
 </body>
