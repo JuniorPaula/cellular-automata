@@ -89,8 +89,14 @@ function render(ctx, board) {
 app.addEventListener("click", (e) => {
     const col = Math.floor(e.offsetX / CELL_WIDTH);
     const row = Math.floor(e.offsetY / CELL_HEIGHT);
-    currentBoard[row][col] = 1;
-    render(ctx, currentBoard);
+    const state = document.getElementsByName("state");
+    for (let i = 0; i < state.length; ++i) {
+        if (state[i].checked) {
+            currentBoard[row][col] = i;
+            render(ctx, currentBoard);
+            return;
+        }
+    }
 });
 next.addEventListener("click", () => {
     computerNextBoardGoL(2, currentBoard, nextBoard);
