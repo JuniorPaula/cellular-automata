@@ -57,6 +57,36 @@ function countNbors(board: Board, nbors: number[], r0: number, c0: number) {
     }
 }
 
+const GoL = [
+    // 0 DEAD
+    [
+        
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        
+    ],
+    // 1 ALIVE
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+    ]
+]
+
 function computerNextBoardGoL(states: number, current: Board, next: Board) {
     const DEAD = 0
     const ALIVE = 1
@@ -64,22 +94,25 @@ function computerNextBoardGoL(states: number, current: Board, next: Board) {
     for (let r = 0; r < BOARD_ROWS; ++r) {
         for (let c = 0; c < BOARD_COLS; ++c) {
             countNbors(current, nbors, r, c)
-            switch (current[r][c]) {
-                case DEAD:
-                    if (nbors[ALIVE] === 3) {
-                        next[r][c] = ALIVE
-                    } else {
-                        next[r][c] = DEAD
-                    }
-                    break
-                case ALIVE:
-                    if (nbors[ALIVE] === 2 || nbors[ALIVE] === 3) {
-                        next[r][c] = ALIVE
-                    } else {
-                        next[r][c] = DEAD
-                    }
-                    break
-            }
+            next[r][c] = GoL[current[r][c]][nbors[DEAD]][nbors[ALIVE]]
+
+            //////////////////////////////////
+            // switch (current[r][c]) {
+            //     case DEAD:
+            //         if (nbors[ALIVE] === 3) {
+            //             next[r][c] = ALIVE
+            //         } else {
+            //             next[r][c] = DEAD
+            //         }
+            //         break
+            //     case ALIVE:
+            //         if (nbors[ALIVE] === 2 || nbors[ALIVE] === 3) {
+            //             next[r][c] = ALIVE
+            //         } else {
+            //             next[r][c] = DEAD
+            //         }
+            //         break
+            // }
         }
     }
 }
